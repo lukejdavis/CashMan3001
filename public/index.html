@@ -1,0 +1,123 @@
+<html>
+<head>
+
+<script>
+	function initialize() {
+		var Http = new XMLHttpRequest();
+		var fifties = parseInt(document.getElementById("initFifties").value,10);
+		if (fifties==null) fifties=0;
+		var twenties = parseInt(document.getElementById("initTwenties").value,10);
+		if (twenties==null) twenties=0;
+		var bundleTxt = "?fifties="+fifties+"&twenties="+twenties;
+		Http.onreadystatechange=function(){
+			if (this.readyState==4 && this.status==200) {
+				document.getElementById("initResult").innerHTML = JSON.parse(Http.responseText).content;
+			} else if (this.status!=200) {
+				document.getElementById("initResult").innerHTML = "Error";
+			}
+		}
+		Http.open("GET","http://localhost:8080/ATM/initialize"+bundleTxt,true);
+		Http.send();
+	}
+	
+	function deposit() {
+		var Http = new XMLHttpRequest();
+		var fifties = document.getElementById("depFifties").value;
+		if (fifties==null) fifties=0;
+		var twenties = document.getElementById("depTwenties").value;
+		if (twenties==null) twenties=0;
+		var bundleTxt = "?fifties="+fifties+"&twenties="+twenties;
+		Http.onreadystatechange=function(){
+			if (this.readyState==4 && this.status==200) {
+				document.getElementById("depResult").innerHTML = JSON.parse(Http.responseText).content;
+				report();
+			} else if (this.status!=200) {
+				document.getElementById("depResult").innerHTML = "Error";
+			}
+		}
+		Http.open("GET","http://localhost:8080/ATM/deposit"+bundleTxt,true);
+		Http.send();
+	}
+
+	function withdraw() {
+		var Http = new XMLHttpRequest();
+		var withdrawVal = document.getElementById("withdrawVal").value;
+		if (withdrawVal==null) withdrawVal=0;
+		Http.onreadystatechange=function(){
+			if (this.readyState==4 && this.status==200) {
+				var obj = JSON.parse(Http.responseText);
+				document.getElementById("withdrawResult").innerHTML = obj.content;
+				document.getElementById("withdrawFiftiesResult").value = obj.bundle.fifties;
+				document.getElementById("withdrawTwentiesResult").value = obj.bundle.twenties;
+				report();
+			} else if (this.status!=200) {
+				document.getElementById("withdrawResult").innerHTML = "Error";
+			}
+		}
+		Http.open("GET","http://localhost:8080/ATM/withdraw?amount="+withdrawVal,true);
+		Http.send();
+	}
+	
+	function report() {
+		var Http = new XMLHttpRequest();
+		Http.onreadystatechange=function(){
+			if (this.readyState==4 && this.status==200) {
+				var obj = JSON.parse(Http.responseText);
+				try {
+					document.getElementById("reportFifties").value = obj.fifties;
+					document.getElementById("reportTwenties").value = obj.twenties;
+					document.getElementById("reportValue").value = obj.totalValue;
+					document.getElementById("reportResult").innerHTML = "";
+				} catch(err) {
+					document.getElementById("reportResult").innerHTML = "Empty result received, this may be due to the ATM not being intialized."
+				}
+			} else if (this.status!=200) {
+				
+			}
+		}
+		Http.open("GET","http://localhost:8080/reports/status",true);
+		Http.send();
+	}
+	
+</script>
+</head>
+<body>
+<H2>CashMan3001</H2>
+<Div style="width:100%;border-style: solid;border-width:1px;">
+	<B>Initilize ATM</B><BR>
+	<button type="button" onclick="initialize();">Initialize System</button>
+	Enter number of $50 notes: <input type="text" id="initFifties" value="100"/>
+	Enter number of $20 notes: <input type="text" id="initTwenties" value="400"/>
+	<div id="initResult" style="width:500px;height:120px;background:lightgrey"/></div>
+</Div>
+<Div style="width:100%;border-style: solid;border-width:1px;">
+	<B>Deposit</B><BR>
+	<button type="button" onclick="deposit();">Deposit</button>
+	Enter number of $50 notes: <input type="text" id="depFifties" value="0"/>
+	Enter number of $20 notes: <input type="text" id="depTwenties" value="0"/>
+	<div id="depResult" style="width:500px;height:120px;background:lightgrey"/></div>
+</Div>
+<Div style="width:100%;border-style: solid;border-width:1px;">
+	<B>Withdraw</B><BR>
+	<button type="button" onclick="withdraw();">Withdraw</button>
+	Enter amount to withdraw: <input type="text" id="withdrawVal" value="0"/>
+	$50 Notes received : 
+	<input type="text" id="withdrawFiftiesResult" disabled="true"/>
+	$20 Notes received: 
+	<input type="text" id="withdrawTwentiesResult" disabled="true"/>
+	<div id="withdrawResult" style="width:500px;height:120px;background:lightgrey"/></div>
+</Div>
+<Div style="width:100%;border-style: solid;border-width:1px;">
+	<B>Report - Current Notes in ATM</B><BR>
+	<button type="button" onclick="report();">Refresh</button>
+	$50 Notes X : 
+	<input type="text" id="reportFifties" disabled="true"/>
+	$20 Notes X : 
+	<input type="text" id="reportTwenties" disabled="true"/>
+	Total Value : 
+	<input type="text" id="reportValue" disabled="true"/>
+	<div id="reportResult" style="width:500px;height:120px;background:lightgrey"/></div>
+</Div>
+
+</body>
+</html>
