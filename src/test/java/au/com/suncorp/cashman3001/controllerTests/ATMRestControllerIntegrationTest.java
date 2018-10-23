@@ -9,8 +9,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import au.com.suncorp.cashman3001.controller.ATMController;
-
 /**
  * Spring Runner Automated Testing Class
  * Conditions : This is a rest interface test therefore the application must be running prior to execution.
@@ -23,7 +21,7 @@ import au.com.suncorp.cashman3001.controller.ATMController;
  *
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(ATMController.class)
+@WebMvcTest
 @ComponentScan("au.com.suncorp.cashman3001.service")
 public class ATMRestControllerIntegrationTest {
 
@@ -39,8 +37,6 @@ public class ATMRestControllerIntegrationTest {
 			JSONObject obj;
 
 			result = this.restTemplate.getForObject("http://localhost:8080/ATM/initialize?fifties=100&twenties=100",String.class);
-			obj = new JSONObject(result);
-			assert(obj.getString("content").contains("ATM")&&obj.getString("content").contains("initialized"));
 			System.out.println(result);
 			
 		} catch (Exception e) {

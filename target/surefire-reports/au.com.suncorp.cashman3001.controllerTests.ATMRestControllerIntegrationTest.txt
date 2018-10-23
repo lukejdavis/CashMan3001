@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: au.com.suncorp.cashman3001.controllerTests.ATMRestControllerIntegrationTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.966 s - in au.com.suncorp.cashman3001.controllerTests.ATMRestControllerIntegrationTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.151 s - in au.com.suncorp.cashman3001.controllerTests.ATMRestControllerIntegrationTest
