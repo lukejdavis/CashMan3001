@@ -34,7 +34,6 @@ public class ATMRestControllerIntegrationTest {
 	public void setup() {
 		try {
 			String result;
-			JSONObject obj;
 
 			result = this.restTemplate.getForObject("http://localhost:8080/ATM/initialize?fifties=100&twenties=100",String.class);
 			System.out.println(result);

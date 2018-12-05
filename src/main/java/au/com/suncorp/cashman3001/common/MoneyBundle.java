@@ -1,7 +1,5 @@
 package au.com.suncorp.cashman3001.common;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import au.com.suncorp.cashman3001.service.ServiceException;
 
 /**
