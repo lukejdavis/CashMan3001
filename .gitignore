@@ -1,1 +1,6 @@
 /target/
+log/spring.log.2018-12-13.0.gz
+log/spring.log.2018-12-05.0.gz
+.settings/org.eclipse.buildship.core.prefs
+.gradle/4.3/fileHashes/fileHashes.lock
+.gradle/4.3/fileChanges/last-build.bin
