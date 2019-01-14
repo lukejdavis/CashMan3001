@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -24,6 +26,8 @@ import au.com.suncorp.cashman3001.model.Contact;
  *
  */
 @SpringBootApplication
+@Configuration
+@ComponentScan
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 public class Application {
     public static void main(String[] args) {
